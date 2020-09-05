@@ -104,3 +104,23 @@ export const isLoggedInUser = () => {
     }
   };
 };
+
+export const logout = () => {
+  return async (dispatch) => {
+    dispatch({ type: `${authConstant.USER_LOGOUT}_REQUEST` });
+    //User logs out
+
+    auth()
+      .signOut()
+      .then(() => {
+        localStorage.clear();
+        dispatch({ type: `${authConstant.USER_LOGOUT}_SUCCESS` });
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch(
+          { type: `${authConstant.USER_LOGOUT}_FAILURE`, payload: error },
+        );
+      });
+  };
+};
