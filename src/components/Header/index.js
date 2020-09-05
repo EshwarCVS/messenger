@@ -12,9 +12,6 @@ import { logout } from "../../actions";
 const Header = (props) => {
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  // const logout = () => {
-  //   dispatch(logout());
-  // };
   return (
     <header className="header">
       <div style={{ display: "flex" }}>
@@ -36,7 +33,7 @@ const Header = (props) => {
             <Link
               to={"#"}
               onClick={() => {
-                dispatch(logout());
+                dispatch(logout(auth.uid));
               }}
             >
               Logout

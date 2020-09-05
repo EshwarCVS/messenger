@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Layout from "../../components/Layout";
 import Card from "../../components/UI/Card";
 import "./styles.css";
 import { useDispatch, useSelector } from "react-redux";
-import { signin, isLoggedInUser } from "../../actions/auth.actions";
+import { signin } from "../../actions/auth.actions";
 import { Redirect } from "react-router";
 
 /**
@@ -16,12 +16,6 @@ const Login = (props) => {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-
-  // useEffect(() => {
-  //   if (!auth.authenticated) {
-  //     dispatch(isLoggedInUser());
-  //   }
-  // }, []);
 
   const userLogin = (e) => {
     e.preventDefault();

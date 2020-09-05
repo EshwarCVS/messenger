@@ -3,7 +3,8 @@ import Layout from "../../components/Layout";
 import Card from "../../components/UI/Card";
 import { signup } from "../../actions";
 import "./styles.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect } from "react-router";
 
 /**
 * @author
@@ -16,6 +17,7 @@ const SignUp = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch(); //to dispatch action
+  const auth = useSelector((state) => state.auth);
 
   const registerUser = (e) => {
     e.preventDefault(); //to prevent default values
@@ -27,6 +29,9 @@ const SignUp = (props) => {
     };
     dispatch(signup(user));
   };
+  if (auth.authenticated) {
+    return <Redirect to={"/"} />;
+  }
   return (
     <Layout>
       <div className="signContainer">

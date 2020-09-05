@@ -1,5 +1,6 @@
 import { auth, firestore } from "firebase";
 import { authConstant } from "./constants";
+
 export const signup = (user) => {
   return async (dispatch) => {
     const db = firestore();
@@ -14,12 +15,15 @@ export const signup = (user) => {
           displayName: name,
         })
           .then(() => {
-            db.collection("users").add({
-              firstName: user.firstName,
-              lastName: user.lastName,
-              uid: data.user.uid,
-              createdAt: new Date(),
-            })
+            db.collection("users")
+              .doc(data.user.uid)
+              .set({
+                firstName: user.firstName,
+                lastName: user.lastName,
+                uid: data.user.uid,
+                isOnline: true,
+                createdAt: new Date(),
+              })
               .then(() => {
                 const loggedInUser = {
                   firstName: user.firstName,
@@ -67,6 +71,7 @@ export const signin = (user) => {
           firstName,
           lastName,
           uid: data.user.uid,
+          isOnline: true,
           email: data.user.email,
         };
         localStorage.setItem("user", JSON.stringify(loggedInUser));
@@ -105,22 +110,32 @@ export const isLoggedInUser = () => {
   };
 };
 
-export const logout = () => {
+export const logout = (uid) => {
   return async (dispatch) => {
     dispatch({ type: `${authConstant.USER_LOGOUT}_REQUEST` });
     //User logs out
-
-    auth()
-      .signOut()
+    const db = firestore();
+    db.collection("users")
+      .doc(uid)
+      .update({
+        isOnline: false,
+      })
       .then(() => {
-        localStorage.clear();
-        dispatch({ type: `${authConstant.USER_LOGOUT}_SUCCESS` });
+        auth()
+          .signOut()
+          .then(() => {
+            localStorage.clear();
+            dispatch({ type: `${authConstant.USER_LOGOUT}_SUCCESS` });
+          })
+          .catch((error) => {
+            console.log(error);
+            dispatch(
+              { type: `${authConstant.USER_LOGOUT}_FAILURE`, payload: error },
+            );
+          });
       })
       .catch((error) => {
         console.log(error);
-        dispatch(
-          { type: `${authConstant.USER_LOGOUT}_FAILURE`, payload: error },
-        );
       });
   };
 };

@@ -4,3 +4,7 @@ export const authConstant = {
   USER_LOGIN_FAILURE: "USER_LOGIN_FAILURE",
   USER_LOGOUT: "USER_LOGOUT",
 };
+
+export const userConstant = {
+  GET_REALTIMEUSERS: "GET_REALTIMEUSERS",
+};
