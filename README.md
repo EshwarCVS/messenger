@@ -1,8 +1,10 @@
 # Messenger
 
-[Heroku App](https://messenger-143.herokuapp.com).
+Click here to view the web application which has been deployed as [Heroku App](https://messenger-143.herokuapp.com).
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+#### Forking the repo and improving the project is encouraged.
 
 ## Available Scripts
 
