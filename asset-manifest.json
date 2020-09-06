@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/messenger/static/css/main.7c04f86a.chunk.css",
+    "main.js": "/messenger/static/js/main.e6bf2896.chunk.js",
+    "main.js.map": "/messenger/static/js/main.e6bf2896.chunk.js.map",
+    "runtime-main.js": "/messenger/static/js/runtime-main.68fb1750.js",
+    "runtime-main.js.map": "/messenger/static/js/runtime-main.68fb1750.js.map",
+    "static/js/2.9221975b.chunk.js": "/messenger/static/js/2.9221975b.chunk.js",
+    "static/js/2.9221975b.chunk.js.map": "/messenger/static/js/2.9221975b.chunk.js.map",
+    "index.html": "/messenger/index.html",
+    "precache-manifest.c32342e94a294700303c36bd990874df.js": "/messenger/precache-manifest.c32342e94a294700303c36bd990874df.js",
+    "service-worker.js": "/messenger/service-worker.js",
+    "static/css/main.7c04f86a.chunk.css.map": "/messenger/static/css/main.7c04f86a.chunk.css.map",
+    "static/js/2.9221975b.chunk.js.LICENSE.txt": "/messenger/static/js/2.9221975b.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.68fb1750.js",
+    "static/js/2.9221975b.chunk.js",
+    "static/css/main.7c04f86a.chunk.css",
+    "static/js/main.e6bf2896.chunk.js"
+  ]
+}
