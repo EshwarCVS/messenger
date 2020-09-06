@@ -1,11 +1,11 @@
 import { userConstant } from "../actions/constants";
 
-const initState = {
+const intiState = {
   users: [],
   conversations: [],
 };
 
-export default (state = initState, action) => {
+export default (state = intiState, action) => {
   switch (action.type) {
     case `${userConstant.GET_REALTIMEUSERS}_REQUEST`:
       break;
@@ -15,24 +15,18 @@ export default (state = initState, action) => {
         users: action.payload.users,
       };
       break;
-    case userConstant.GET_REALTIMEMESSAGES:
+    case userConstant.GET_REALTIME_MESSAGES:
       state = {
         ...state,
         conversations: action.payload.conversations,
       };
       break;
-    case `${userConstant.GET_REALTIMEMESSAGES}_FAILURE`:
+    case `${userConstant.GET_REALTIME_MESSAGES}_FAILURE`:
       state = {
         ...state,
         conversations: [],
       };
       break;
-    default:
-      state = {
-        ...state,
-      };
-      break;
   }
-
   return state;
 };
