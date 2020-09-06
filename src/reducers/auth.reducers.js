@@ -11,6 +11,7 @@ const initState = {
 
 export default (state = initState, action) => {
   console.log(action);
+
   switch (action.type) {
     case `${authConstant.USER_LOGIN_REQUEST}`:
       state = {
@@ -48,5 +49,6 @@ export default (state = initState, action) => {
       };
       break;
   }
+
   return state;
 };
