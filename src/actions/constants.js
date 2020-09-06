@@ -7,4 +7,5 @@ export const authConstant = {
 
 export const userConstant = {
   GET_REALTIMEUSERS: "GET_REALTIMEUSERS",
+  GET_REALTIME_MESSAGES: "GET_REALTIMEMESSAGES",
 };

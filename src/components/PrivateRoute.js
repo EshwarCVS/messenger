@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
 /**
-* @author
+* @author Eshwar CVS
 * @function PrivateRoute
 **/
 
@@ -12,8 +12,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       {...rest}
       component={(props) => {
         const user = localStorage.getItem("user")
-          ? JSON.parse(localStorage.getItem("user"))
-          : null;
+          ? JSON.parse(localStorage.getItem("user")) : null;
         if (user) {
           return <Component {...props} />;
         } else {

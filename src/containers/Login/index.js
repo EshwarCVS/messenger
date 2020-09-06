@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import Layout from "../../components/Layout";
 import Card from "../../components/UI/Card";
+import { signin } from "../../actions";
 import "./styles.css";
 import { useDispatch, useSelector } from "react-redux";
-import { signin } from "../../actions/auth.actions";
-import { Redirect } from "react-router";
+import { Redirect } from "react-router-dom";
 
 /**
-* @author
+* @author Eshwar CVS
 * @function Login
 **/
 
@@ -16,10 +16,8 @@ const Login = (props) => {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-
   const userLogin = (e) => {
     e.preventDefault();
-
     if (email === "") {
       alert("Email is required");
       return;
@@ -28,13 +26,13 @@ const Login = (props) => {
       alert("Password is required");
       return;
     }
-
     dispatch(signin({ email, password }));
   };
 
   if (auth.authenticated) {
-    return <Redirect to={"/"} />;
+    return <Redirect to={`/`} />;
   }
+
   return (
     <Layout>
       <div className="loginContainer">
@@ -54,7 +52,9 @@ const Login = (props) => {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
             />
-            <div><button>Login</button></div>
+            <div>
+              <button>Login</button>
+            </div>
           </form>
         </Card>
       </div>

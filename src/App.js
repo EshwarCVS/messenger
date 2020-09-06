@@ -9,15 +9,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { isLoggedInUser } from "./actions";
 
 function App() {
-  const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (!auth.authenticated) {
       dispatch(isLoggedInUser());
     }
   }, []);
-
   return (
     <div className="App">
       <Router>

@@ -5,13 +5,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../actions";
 
 /**
-* @author
+* @author Eshwar CVS
 * @function Header
 **/
 
 const Header = (props) => {
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  console.log("HOME");
   return (
     <header className="header">
       <div style={{ display: "flex" }}>

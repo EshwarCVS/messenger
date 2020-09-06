@@ -6,7 +6,9 @@ export const signup = (user) => {
     const db = firestore();
 
     dispatch({ type: `${authConstant.USER_LOGIN_REQUEST}` });
-    auth().createUserWithEmailAndPassword(user.email, user.password)
+
+    auth()
+      .createUserWithEmailAndPassword(user.email, user.password)
       .then((data) => {
         console.log(data);
         const currentUser = auth().currentUser;
@@ -15,27 +17,26 @@ export const signup = (user) => {
           displayName: name,
         })
           .then(() => {
+            //if you are here means it is updated successfully
             db.collection("users")
               .doc(data.user.uid)
               .set({
                 firstName: user.firstName,
                 lastName: user.lastName,
                 uid: data.user.uid,
-                isOnline: true,
                 createdAt: new Date(),
+                isOnline: true,
               })
               .then(() => {
+                //succeful
                 const loggedInUser = {
                   firstName: user.firstName,
                   lastName: user.lastName,
                   uid: data.user.uid,
                   email: user.email,
                 };
-                localStorage.setItem(
-                  "user",
-                  JSON.stringify({ loggedInUser }),
-                );
-                console.log("User log in successful");
+                localStorage.setItem("user", JSON.stringify(loggedInUser));
+                console.log("User logged in successfully...!");
                 dispatch({
                   type: `${authConstant.USER_LOGIN_SUCCESS}`,
                   payload: { user: loggedInUser },
@@ -63,23 +64,35 @@ export const signin = (user) => {
       .signInWithEmailAndPassword(user.email, user.password)
       .then((data) => {
         console.log(data);
-        const name = data.user.displayName.split(" ");
-        const firstName = name[0];
-        const lastName = name[1];
 
-        const loggedInUser = {
-          firstName,
-          lastName,
-          uid: data.user.uid,
-          isOnline: true,
-          email: data.user.email,
-        };
-        localStorage.setItem("user", JSON.stringify(loggedInUser));
+        const db = firestore();
+        db.collection("users")
+          .doc(data.user.uid)
+          .update({
+            isOnline: true,
+          })
+          .then(() => {
+            const name = data.user.displayName.split(" ");
+            const firstName = name[0];
+            const lastName = name[1];
 
-        dispatch({
-          type: `${authConstant.USER_LOGIN_SUCCESS}`,
-          payload: { user: loggedInUser },
-        });
+            const loggedInUser = {
+              firstName,
+              lastName,
+              uid: data.user.uid,
+              email: data.user.email,
+            };
+
+            localStorage.setItem("user", JSON.stringify(loggedInUser));
+
+            dispatch({
+              type: `${authConstant.USER_LOGIN_SUCCESS}`,
+              payload: { user: loggedInUser },
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       })
       .catch((error) => {
         console.log(error);
@@ -92,14 +105,15 @@ export const signin = (user) => {
 };
 
 export const isLoggedInUser = () => {
-  return (dispatch) => {
+  return async (dispatch) => {
     const user = localStorage.getItem("user")
       ? JSON.parse(localStorage.getItem("user"))
       : null;
+
     if (user) {
       dispatch({
         type: `${authConstant.USER_LOGIN_SUCCESS}`,
-        payload: { user: user },
+        payload: { user },
       });
     } else {
       dispatch({
@@ -112,8 +126,9 @@ export const isLoggedInUser = () => {
 
 export const logout = (uid) => {
   return async (dispatch) => {
-    dispatch({ type: `${authConstant.USER_LOGOUT}_REQUEST` });
-    //User logs out
+    dispatch({ type: `${authConstant.USER_LOGOUT_REQUEST}` });
+    //Now lets logout user
+
     const db = firestore();
     db.collection("users")
       .doc(uid)
@@ -124,13 +139,17 @@ export const logout = (uid) => {
         auth()
           .signOut()
           .then(() => {
+            //successfully
             localStorage.clear();
             dispatch({ type: `${authConstant.USER_LOGOUT}_SUCCESS` });
           })
           .catch((error) => {
             console.log(error);
             dispatch(
-              { type: `${authConstant.USER_LOGOUT}_FAILURE`, payload: error },
+              {
+                type: `${authConstant.USER_LOGOUT}_FAILURE`,
+                payload: { error },
+              },
             );
           });
       })

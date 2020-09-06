@@ -8,6 +8,7 @@ const initState = {
   authenticated: false,
   error: null,
 };
+
 export default (state = initState, action) => {
   console.log(action);
   switch (action.type) {
@@ -22,7 +23,7 @@ export default (state = initState, action) => {
         ...state,
         ...action.payload.user,
         authenticated: true,
-        authenticating: true,
+        authenticating: false,
       };
       break;
     case `${authConstant.USER_LOGIN_FAILURE}`:
